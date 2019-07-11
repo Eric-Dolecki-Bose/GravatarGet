@@ -44,6 +44,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     var imageView: UIImageView!
     var textInput: UITextField!
     var debugLabel: UILabel!
+    var errorLabel: UILabel!
     
     override func viewDidLoad()
     {
@@ -79,9 +80,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         debugLabel.textAlignment = .center
         debugLabel.numberOfLines = 3
         
+        errorLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.width - 50, height: 50))
+        errorLabel.center = CGPoint(x: debugLabel.center.x, y: debugLabel.center.y + 50)
+        errorLabel.font = UIFont.systemFont(ofSize: 13.0)
+        errorLabel.textColor = UIColor.red
+        errorLabel.textAlignment = .center
+        errorLabel.numberOfLines = 3
+        
         self.view.addSubview(imageView)
         self.view.addSubview(textInput)
         self.view.addSubview(debugLabel)
+        self.view.addSubview(errorLabel)
         
         attemptToLoadGravatar(emailString: "edolecki@gmail.com")
     }
@@ -120,6 +129,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
            
         } catch {
             print("Error. \(error.localizedDescription)")
+            errorLabel.text = "\(error.localizedDescription)"
+            UIView.animate(withDuration: 0.6) {
+                self.errorLabel.alpha = 1.0
+            }
             debugLabel.text = ""
         }
     }
@@ -130,6 +143,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         guard let text = textField.text, !text.isEmpty else {
             return false
         }
+        errorLabel.alpha = 0
         attemptToLoadGravatar(emailString: text)
         return false
     }
