@@ -1,5 +1,6 @@
 ![badge](./ed-badge.png)
 
+<img src="https://img.shields.io/badge/Team-UCD%20Prototyping-blue.svg"/>
 ----
 
 # GravatarGet
