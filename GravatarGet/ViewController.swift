@@ -39,6 +39,9 @@ struct Photo: Codable {
     let type: String
 }
 
+/*
+    email addresses are case-sensitive FYI.
+ */
 class ViewController: UIViewController, UITextFieldDelegate {
 
     var imageView: UIImageView!
@@ -68,10 +71,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textInput.layer.shadowOpacity = 0.15
         textInput.clearButtonMode = .whileEditing
         textInput.autocapitalizationType = .none
+        textInput.spellCheckingType = .no
         textInput.layer.cornerRadius = 8.0
         textInput.returnKeyType = .search
         textInput.delegate = self
+        textInput.layer.borderColor = UIColor.blue.cgColor
+        textInput.layer.borderWidth = 1.5
         textInput.becomeFirstResponder()
+        textInput.addTarget(self, action: #selector(textFieldDidChange(sender:)), for: .editingChanged)
         
         let spacerView = UIView(frame:CGRect(x:0, y:0, width:10, height:10))
         textInput.leftViewMode = UITextField.ViewMode.always
@@ -169,6 +176,34 @@ class ViewController: UIViewController, UITextFieldDelegate {
         UIView.animate(withDuration: 0.35) {
             self.textInput.layer.shadowOpacity = 0.15
         }
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        textInput.layer.borderColor = UIColor.red.cgColor
+        return true
+    }
+
+    // MARK: - Validate email
+    
+    @objc func textFieldDidChange(sender: UITextField) {
+        let text = sender.text
+        if !sender.hasText {
+            print("no text to email validate.")
+            return
+        }
+        let isValid = isValidEmail(testStr: text!)
+        print(text!, isValid)
+        if isValid {
+            textInput.layer.borderColor = UIColor.blue.cgColor
+        } else {
+            textInput.layer.borderColor = UIColor.red.cgColor
+        }
+    }
+    
+    func isValidEmail(testStr: String) -> Bool {
+        let emailRegEx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$"
+        let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
+        return emailTest.evaluate(with: testStr)
     }
     
     // MARK: - Hashing
