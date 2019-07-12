@@ -1,6 +1,6 @@
 ![badge](./ed-badge.png)
 
-<img src="https://img.shields.io/badge/Team-UCD%20Prototyping-blue.svg"/>
+<img src="https://img.shields.io/badge/Team-UCD%20Prototyping-blue.svg"/> <img src="https://img.shields.io/badge/License-GNU%20GPLv3-blue.svg"/>
 
 ----
 
