@@ -62,6 +62,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textInput.backgroundColor = UIColor.white
         textInput.placeholder = "email address"
         textInput.text = "edolecki@gmail.com"
+        textInput.layer.shadowColor = UIColor.black.cgColor
+        textInput.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        textInput.layer.shadowRadius = 7.0
+        textInput.layer.shadowOpacity = 0.15
         textInput.clearButtonMode = .whileEditing
         textInput.autocapitalizationType = .none
         textInput.layer.cornerRadius = 8.0
@@ -126,10 +130,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
             //print(base.photos[0].type, base.photos[0].value)
             
             debugLabel.text = "Display: \(displayName)\nmd5: \(hash), ID: \(id)"
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.success)
            
         } catch {
             print("Error. \(error.localizedDescription)")
             errorLabel.text = "\(error.localizedDescription)"
+            
+            let generator = UINotificationFeedbackGenerator()
+            generator.notificationOccurred(.error)
+            
             UIView.animate(withDuration: 0.6) {
                 self.errorLabel.alpha = 1.0
             }
@@ -150,6 +160,15 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+        UIView.animate(withDuration: 0.35) {
+            self.textInput.layer.shadowOpacity = 0.05
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.35) {
+            self.textInput.layer.shadowOpacity = 0.15
+        }
     }
     
     // MARK: - Hashing
