@@ -188,11 +188,11 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @objc func textFieldDidChange(sender: UITextField) {
         let text = sender.text
         if !sender.hasText {
-            print("no text to email validate.")
+            //There is no text to email validate.
+            sender.layer.borderColor = UIColor.red.cgColor
             return
         }
         let isValid = isValidEmail(testStr: text!)
-        print(text!, isValid)
         if isValid {
             textInput.layer.borderColor = UIColor.blue.cgColor
         } else {
