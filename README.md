@@ -13,6 +13,8 @@ I am using .json for the requested and returned profile data. I am handling erro
 
 Because the root of the profile JSON is an array with a single item, it made parsing a little different. Using Codable structs to handle that which makes parsing so much easier than before.
 
+There is rudimentary support for email address validation as one types. You can always kick off a search no matter what the text input field contains. Errors are handled in the user interface.
+
 ----
 
 ![app](./app.png)
