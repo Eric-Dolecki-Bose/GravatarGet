@@ -18,3 +18,43 @@ There is rudimentary support for email address validation as one types. You can 
 ----
 
 ![app](./app.png)
+
+----
+
+email address validation.
+
+```swift
+func isValidEmail(testStr: String) -> Bool {
+    let emailRegEx = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{1,4}$"
+    let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
+    return emailTest.evaluate(with: testStr)
+}
+```
+
+Hashing.
+
+```swift
+import var CommonCrypto.CC_MD5_DIGEST_LENGTH
+import func CommonCrypto.CC_MD5
+import typealias CommonCrypto.CC_LONG
+
+//Stuff...
+
+func MD5(string: String) -> Data {
+    let length = Int(CC_MD5_DIGEST_LENGTH)
+    let messageData = string.data(using:.utf8)!
+    var digestData = Data(count: length)
+        
+    _ = digestData.withUnsafeMutableBytes { digestBytes -> UInt8 in
+        messageData.withUnsafeBytes { messageBytes -> UInt8 in
+            if let messageBytesBaseAddress = messageBytes.baseAddress, let digestBytesBlindMemory = digestBytes.bindMemory(to: UInt8.self).baseAddress {
+                let messageLength = CC_LONG(messageData.count)
+                CC_MD5(messageBytesBaseAddress, messageLength, digestBytesBlindMemory)
+            }
+            return 0
+        }
+    }
+    return digestData
+}
+
+```
