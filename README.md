@@ -12,3 +12,7 @@ The requested avatar image delivers either existing image or a default image (ra
 I am using .json for the requested and returned profile data. I am handling errors.
 
 Because the root of the profile JSON is an array with a single item, it made parsing a little different. Using Codable structs to handle that which makes parsing so much easier than before.
+
+----
+
+![app](./app.png)
