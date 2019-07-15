@@ -21,7 +21,7 @@ There is rudimentary support for email address validation as one types. You can 
 
 ----
 
-email address validation.
+### email address validation.
 
 ```swift
 func isValidEmail(testStr: String) -> Bool {
@@ -31,7 +31,7 @@ func isValidEmail(testStr: String) -> Bool {
 }
 ```
 
-Hashing.
+### Hashing.
 
 ```swift
 import var CommonCrypto.CC_MD5_DIGEST_LENGTH
@@ -58,4 +58,7 @@ func MD5(string: String) -> Data {
     return digestData
 }
 
+// Use (produce md5 hash from a string). 
+let md5Data = MD5(string: someString)
+let md5Hex =  md5Data.map { String(format: "%02hhx", $0) }.joined()
 ```
